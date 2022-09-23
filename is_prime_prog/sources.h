@@ -1,4 +1,9 @@
 #pragma once
+#include <iostream>
+#include <string.h>
+#include <stdio.h>
 
-extern int i;
-int square(int i);
+using namespace std;
+
+extern char numbers;
+void prime(char numbers[]);

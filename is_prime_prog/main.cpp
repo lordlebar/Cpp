@@ -2,12 +2,13 @@
 #include "sources.h"
 //#include "sources_2.h"
 
-
+using namespace std;
 
 int main()
 {
-    std::cout << "Please type a number" << std::endl;
-    std::cin >> i;
-    std::cout << "The square of " << i << " is " << square(i) << '\n';
+    char numbers[256];
+    cout << "Please type numbers : ";
+    cin.getline(numbers, 256);
+    prime(numbers);
     return 0;
 }

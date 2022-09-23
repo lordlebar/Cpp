@@ -5,5 +5,5 @@
 
 using namespace std;
 
-extern char numbers;
-void prime(char numbers[]);
+void split(char numbers[]);
+bool prime(char *number);

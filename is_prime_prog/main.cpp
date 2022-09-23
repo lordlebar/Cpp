@@ -9,6 +9,6 @@ int main()
     char numbers[256];
     cout << "Please type numbers : ";
     cin.getline(numbers, 256);
-    prime(numbers);
+    split(numbers);
     return 0;
 }

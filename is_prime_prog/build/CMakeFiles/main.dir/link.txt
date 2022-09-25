@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/main.dir/main.cpp.o  -o main  -Wl,-rpath,/mnt/c/Users/coren/Desktop/Cpp/is_prime_prog/build libmysource.so 

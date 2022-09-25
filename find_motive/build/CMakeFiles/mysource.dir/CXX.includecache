@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/c/Users/coren/Desktop/Cpp/find_motive/source.cpp
+fstream
+-
+source.h
+/mnt/c/Users/coren/Desktop/Cpp/find_motive/source.h
+
+/mnt/c/Users/coren/Desktop/Cpp/find_motive/source.h
+iostream
+-
+

@@ -1,0 +1,4 @@
+/mnt/c/Users/coren/Desktop/Cpp/is_prime_prog/build/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/coren/Desktop/Cpp/is_prime_prog/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/coren/Desktop/Cpp/is_prime_prog/build/CMakeFiles/main.dir
+/mnt/c/Users/coren/Desktop/Cpp/is_prime_prog/build/CMakeFiles/mysource.dir

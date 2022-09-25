@@ -1,6 +1,5 @@
 #include <iostream>
 #include "sources.h"
-//#include "sources_2.h"
 
 using namespace std;
 

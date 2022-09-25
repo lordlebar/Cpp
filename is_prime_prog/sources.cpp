@@ -1,3 +1,4 @@
+#include <string.h>
 #include "sources.h"
 
 void split(char numbers[]){

@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/c/Users/coren/Desktop/Cpp/is_prime_prog/main.cpp
+iostream
+-
+sources.h
+/mnt/c/Users/coren/Desktop/Cpp/is_prime_prog/sources.h
+
+/mnt/c/Users/coren/Desktop/Cpp/is_prime_prog/sources.h
+iostream
+-
+

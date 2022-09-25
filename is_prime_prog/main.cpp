@@ -7,7 +7,6 @@ using namespace std;
 int main()
 {
     char numbers[256];
-    cout << "Please type numbers : ";
     cin.getline(numbers, 256);
     split(numbers);
     return 0;

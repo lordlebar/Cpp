@@ -1,0 +1,37 @@
+
+# Review is_prime_prog :
+
+#include <iostream>
+#include <string>
+
+bool is_prime(int num)
+{
+    for (int i = 2; i < num / 2; i++)
+    {
+        if (num % i == 0)
+        {
+            return false;
+        }
+    }
+    return num < 2 ? false : true; 
+}
+
+void printPrimeNumber(int num)
+{
+    std::cout << num << " is a prime: " << (is_prime(num) == 1 ? "True" : "False") << "\n"; // endl serai mieux je pense. 
+}
+
+int main()
+{
+    int n;
+    while (std::cin >> n)
+    {
+        printPrimeNumber(n);
+    }
+    return 0;
+}
+
+Pas de fichier source.cpp/.h
+Le code est bon, fonctionnel, simple à comprendre. Les fonctions sont bien séparées, avec un nom compréhensible, une pour print et une qui regarde si le nombre est prime.
+
+Corentin Lebarilier.

@@ -8,28 +8,32 @@
 
 class Vector
 {
-public:
-// DO NOT CHANGE THIS
-    Vector(const Vector&) = default;
-    Vector& operator=(const Vector&) = default;
-    ~Vector() = default;
-//
 
-// Add suitable constructors
-    Vector();
-    Vector(std::initializer_list<int> list);
-    // possibly more
+    private:
+    // Private Member functions here
+        value data[NDIM];
+    // Member variables are ALWAYS private, and they go here
 
-// Public Member functions here
-    Vector& operator+=(const Vector& rhs);
-    //Vector& operator-=(const Vector& rhs);
-    // More to go
+    public:
+    // DO NOT CHANGE THIS
+        Vector(const Vector&) = default;
+        Vector& operator=(const Vector&) = default;
+        ~Vector() = default;
+    //
 
-private:
-// Private Member functions here
-    int _x;
-    int _y;
-// Member variables are ALWAYS private, and they go here
+    // Add suitable constructors
+        Vector();
+        Vector(std::initializer_list<int> values);
+        // possibly more
+
+    // Public Member functions here
+        Vector& operator+=(const Vector& rhs);
+        // Vector& operator-=(const Vector& rhs);
+        // Vector& operator*=(const Vector& rhs);
+        Vector& operator+(const Vector& rhs);
+        // Vector& operator-(const Vector& rhs);
+        // Vector& operator*(const Vector& rhs);
+        // More to go
 };
 
 // Nonmember function operators go here

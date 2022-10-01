@@ -4,13 +4,13 @@ cmake_minimum_required(VERSION 3.0)
 project(cartesian_vector_param_2)
 
 # add the lib
-add_library(mysource SHARED vector.cc)
+add_library(mysource SHARED vector.cpp)
 
 # add another
 #add_library(mysource_2 SHARED sources_2.cpp)
 
 # add the executable
-add_executable(main main.cc)
+add_executable(main main.cpp)
 
 # do not forget to link
 target_link_libraries(main mysource)

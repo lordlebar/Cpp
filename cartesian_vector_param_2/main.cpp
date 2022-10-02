@@ -5,7 +5,6 @@
 //  Created by Corentin Lebarilier on 9/30/22.
 //
 
-#include <stdio.h>
 #include <iostream>
 
 #include "vector.hpp"
@@ -21,14 +20,13 @@ void testInit()
     auto v = Vector{ 4, 7 };
     auto t = Vector{ -1, 6 };
 
-    std::cout << u + v << '\n'; // {4,7}
+    std::cout << u + v << std::endl; // {4,7}  V
     u += Vector{ 1, 8 };
-    std::cout << u << '\n'; // {1,8}
-    // t -= u;
-    // std::cout << t << '\n'; // {-2,-2}
-    // std::cout << t * 3 << '\n'; // {-6,-6}
-    // std::cout << u * v << '\n'; // 60
-
+    std::cout << u << std::endl; // {1,8} V
+    t -= u;
+    std::cout << t << std::endl; // {-2,-2} V
+    std::cout << t * 3 << std::endl; // {-6,-6}
+    std::cout << u * v << std::endl; // 60
 }
 #elif NDIM == 3
 void testInit()
@@ -38,13 +36,13 @@ void testInit()
     auto v = Vector{ 4, 7, -1 };
     auto t = Vector{ -1, 6, 77 };
 
-    std::cout << u + v << '\n'; // {4,7,-1}
+    std::cout << u + v << std::endl; // {4,7,-1}
     u += Vector{ 1, 8, -11 };
-    std::cout << u << '\n'; // {1,8,-11}
+    std::cout << u << std::endl; // {1,8,-11}
     t -= u;
-    std::cout << t << '\n'; // {-2,-2,88}
-    std::cout << t * 3 << '\n'; // {-6,-6,264}
-    std::cout << u * v << '\n'; // 71
+    std::cout << t << std::endl; // {-2,-2,88}
+    std::cout << t * 3 << std::endl; // {-6,-6,264}
+    std::cout << u * v << std::endl; // 71
 }
 #else
 void testInit()
@@ -87,7 +85,7 @@ void testAdd(size_t n)
     for (const auto& other : vv)
         sum = sum + other;
     // Print for verif
-    std::cout << sum << '\n';
+    std::cout << sum << std::endl;
 }
 
 // Takes as input the number of vectors

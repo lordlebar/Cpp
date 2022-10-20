@@ -24,5 +24,5 @@ bool is_prime(long num)
 
 void printPrimeNumber(long num)
 {
-    std::cout << num << " is a prime: " << (is_prime(num) == 1 ? "True" : "False") << "\n"; 
+    cout << num << " is a prime: " << (is_prime(num) == 1 ? "True" : "False") << "\n"; 
 }

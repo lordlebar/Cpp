@@ -6,7 +6,7 @@ using namespace std;
 int main()
 {
     long n;
-    while (std::cin >> n)
+    while (cin >> n)
     {
         printPrimeNumber(n);
     }

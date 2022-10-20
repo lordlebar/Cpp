@@ -7,106 +7,91 @@
 
 #include "vector.hpp"
 
-Vector::Vector(){
-    for (int i = 0; i < NDIM; i++){
-        vector[i] = 0;
-        //std::cout << "vector Constuctor: " << vector[i] << std::endl;
-    }
+const value& Vector::operator[](size_t pos) const{
+    return vect[pos];
 }
 
-Vector::Vector(std::initializer_list<int> list){
-    std::initializer_list<int>::iterator i;
-    int val = 0;
-    for (i = list.begin(); i != list.end(); i++){
-        vector[val++] = *i;
-        //std::cout << "vector Constructor_list: " << vector[val-1] << std::endl;
-    }
-    // std::cout << "constructed with a " << list.size() << "-element list\n";
+value& Vector::operator[](size_t pos){
+    return vect[pos];
 }
 
-
-Vector& Vector::operator+=(const Vector& rhs){
-    for (int i = 0; i < NDIM; ++i){ 
-        vector[i] += rhs.vector[i];
+Vector& Vector::operator+=(const Vector& rhs) {
+    for (int i = 0; i < NDIM; i++) {
+        vect[i] += rhs[i];
     }
     return *this;
 }
 
-Vector& Vector::operator+=(int val){
-    for (int i = 0; i < NDIM; i++){ 
-        vector[i] += val;
+Vector& Vector::operator+=(value scalar)  {
+    for (int i = 0; i < NDIM; i++) {
+        vect[i] += scalar;
     }
     return *this;
 }
 
 Vector& Vector::operator-=(const Vector& rhs){
-    for (int i = 0; i < NDIM; ++i){ 
-        vector[i] -= rhs.vector[i];
+    for (int i = 0; i < NDIM; i++) {
+        vect[i] -= rhs[i];
     }
     return *this;
 }
-
-Vector& Vector::operator*=(const Vector& rhs){
-    for (int i = 0; i < NDIM; i++){ 
-        vector[i] *= rhs.vector[i];
-    }
-    return *this;
-}
-
-Vector& Vector::operator*=(const int& val){
-    for (int i = 0; i < NDIM; i++){ 
-        vector[i] *= val;
+Vector& Vector::operator*=(const Vector& rhs) {
+    for (int i = 0; i < NDIM; i++) {
+        vect[i] *= rhs[i];
     }
     return *this;
 }
 
 
-Vector& Vector::operator+(const Vector& rhs){
-    auto v = Vector{rhs};
-    return v += *this;
+Vector& Vector::operator*=(const value& scalar) {
+    for (int i = 0; i < NDIM; i++) {
+        vect[i] *= scalar;
+    }
+    return *this;
 }
 
-Vector& Vector::operator-(const Vector& rhs){
-    auto v = Vector{rhs};
-    return v -= *this;
-}
 
-Vector operator*(const Vector& rhs, int val){
-    auto v = Vector{rhs};
-    int* data = Vector{rhs}.getValues();
-    for (int i = 0; i <= NDIM; i++){
-        v[i] += (val - 1) * data[i];
+ostream& operator<<(ostream& os, const Vector& rhs) {
+        os<<'{';
+        int i = 0;
+        for (; i < NDIM - 1; i++) {
+            os<<rhs[i]<<',';
+        }
+        os<<rhs[i]<<"}";
+        return os;
+}
+Vector operator+(const Vector& lhs, const Vector& rhs) {
+    Vector v = Vector();
+    for (int i = 0; i < NDIM; i++) {
+        v[i] = lhs[i] + rhs[i];
     }
     return v;
 }
-
-int& Vector::operator*(const Vector& rhs){
-    auto v = Vector{rhs};
-    auto vec = (v *= *this);
-    //std::cout << vec << std::endl;
-    for (int i = 1; i < NDIM; i++){
-        *vec.getValues() += vec[i];
+Vector operator-(const Vector& lhs, const Vector& rhs)  {
+    Vector v = Vector();
+    for (int i = 0; i < NDIM; i++) {
+        v[i] = lhs[i] - rhs[i];
     }
-    return *vec.getValues();
+    return v;
 }
-
-int& Vector::operator[](int rhs){
-    return vector[rhs];
-}
-
-std::ostream& operator<<(std::ostream& OsPrint, const Vector& rhs)
-{
-    int i = 0;
-    OsPrint << "{";
-    int* data = Vector{rhs}.getValues();
-    while (i < NDIM - 1){
-        OsPrint << data[i] << ",";
-        i++;
+Vector operator*(const Vector& lhs, value scalar) {
+    Vector v = Vector();
+    for (int i = 0; i < NDIM; i++) {
+        v[i] = lhs[i] * scalar;
     }
-    OsPrint << data[i] << "}";
-    return OsPrint;
+    return v;
 }
-
-int *Vector::getValues(){
-    return vector;
+Vector operator*(value scalar, const Vector& rhs) {
+    Vector v = Vector();
+    for (int i = 0; i < NDIM; i++) {
+        v[i] = scalar* rhs[i];
+    }
+    return v;
+}
+value operator*(const Vector& lhs, const Vector& rhs) {
+    value sum = 0;
+    for (int i = 0; i < NDIM; i++) {
+        sum += lhs[i] * rhs[i];
+    }
+    return sum;
 }

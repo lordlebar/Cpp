@@ -5,57 +5,60 @@
 //  Created by Corentin Lebarilier on 9/30/22.
 //
 
-#ifndef vector_hpp
-#define vector_hpp
+#pragma once
 
-#include <iostream>
 #include <ostream>
+#include <iostream>
 #include <initializer_list>
 
 #include "config.h"
+using namespace std;
 
 class Vector
 {
-    public:
-    // DO NOT CHANGE THIS
-        Vector(const Vector&) = default;
-        Vector& operator=(const Vector&) = default;
-        ~Vector() = default;
-    //
+public:
+// DO NOT CHANGE THIS
+    Vector(const Vector&) = default;
+    Vector& operator=(const Vector&) = default;
+    ~Vector() = default;
+//
 
-    // Add suitable constructors
-        Vector();
-        Vector(std::initializer_list<int> list);
-        // possibly more
+// Add suitable constructors
+    Vector(){
+        for(value i = 0; i < NDIM; i++)
+        {
+            vect[i] = 0;
+        }
+    };
+    Vector(initializer_list<value> li)
+    {
+        value count = 0;
+        for (value element : li) {
+            vect[count] = element;
+            ++count;
+        }
+    };
+    // possibly more
+// Public Member functions here
+    const value& operator[](size_t pos) const;
+    value& operator[](size_t pos);
+    Vector& operator+=(const Vector& rhs);
+    Vector& operator+=(value scalar);
+    Vector& operator-=(const Vector& rhs);
+    Vector& operator*=(const Vector& rhs);
+    Vector& operator*=(const value& scalar);
+    // More to go
 
-    // Public Member functions here
-    //
-        Vector& operator+=(const Vector& rhs);
-        Vector& operator+=(int val);
-
-        Vector& operator-=(const Vector& rhs);
-        Vector& operator*=(const Vector& rhs);
-        Vector& operator*=(const int& val);
-
-        Vector& operator+(const Vector& rhs);
-        Vector& operator-(const Vector& rhs);
-
-        int& operator*(const Vector& rhs);
-
-        int& operator[](int rhs);
-
-
-        // More to go
-        int *getValues();
-
-    private:
-    // Private Member functions here
-
-    // Member variables are ALWAYS private, and they go here
-        int vector[NDIM];
+private:
+// Private Member functions here
+    value vect[NDIM];
+// Member variables are ALWAYS private, and they go here
 };
 
 // Nonmember function operators go here
-std::ostream& operator<<(std::ostream& OsPrint, const Vector& rhs);
-Vector operator*(const Vector& rhs, int val);
-#endif /* vector_hpp */
+ostream& operator<<(ostream& os, const Vector& rhs);
+Vector operator+(const Vector& lhs, const Vector& rhs);
+Vector operator-(const Vector& lhs, const Vector& rhs);
+Vector operator*(const Vector& lhs, value scalar);
+Vector operator*(value scalar, const Vector& rhs);
+value operator*(const Vector& lhs, const Vector& rhs);

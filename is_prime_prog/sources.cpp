@@ -1,32 +1,28 @@
-#include <string.h>
 #include "sources.h"
 
-void split(char numbers[]){
-    char *number = strtok(numbers, " ");
-
-     while (number != NULL)
+bool is_prime(long num)
+{
+    if (num == 3 || num == 2)
     {
-        cout << number << " is a prime: " << (prime(number) ? "True" : "False") << endl;
-        number = strtok(NULL, " ");
+        return true;
     }
+
+    if (num % 2 == 0 || num % 3 == 0)
+    {
+        return false;
+    }
+
+    for (int i = 4; i * i <= num; i++)
+    {
+        if (num % i == 0)
+        {
+            return false;
+        }
+    }
+    return num < 2 ? false : true;
 }
 
-bool prime(char *number){
-
-        int num = atoi(number);
-        int r = 0;
-        if (num == 1)
-            return false;
-
-        for (int y = 1; y <= num; y++){
-            if(num % y == 0){
-                r++;
-            }
-        }
-
-        if(r > 2)
-            return false;
-   
-        else
-            return true;
+void printPrimeNumber(long num)
+{
+    std::cout << num << " is a prime: " << (is_prime(num) == 1 ? "True" : "False") << "\n"; 
 }

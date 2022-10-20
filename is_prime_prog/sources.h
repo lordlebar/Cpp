@@ -2,10 +2,11 @@
 #define SOURCES
 
 #include <iostream>
+#include <string>
 
 using namespace std;
 
-void split(char numbers[]);
-bool prime(char *number);
+bool is_prime(long num);
+void printPrimeNumber(long num);
 
 #endif /* SOURCES */

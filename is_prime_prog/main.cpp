@@ -5,8 +5,10 @@ using namespace std;
 
 int main()
 {
-    char numbers[256];
-    cin.getline(numbers, 256);
-    split(numbers);
+    long n;
+    while (std::cin >> n)
+    {
+        printPrimeNumber(n);
+    }
     return 0;
 }

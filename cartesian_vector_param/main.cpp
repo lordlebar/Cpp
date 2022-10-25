@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-#include "vector.hpp"
+#include "vector.hh"
 
 #include <vector>
 #include <cstring> //strcmp

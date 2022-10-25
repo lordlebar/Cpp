@@ -5,7 +5,7 @@
 //  Created by Corentin Lebarilier on 9/30/22.
 //
 
-#include "vector.hpp"
+#include "vector.hh"
 
 const value& Vector::operator[](size_t pos) const{
     return vect[pos];

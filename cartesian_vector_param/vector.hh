@@ -1,5 +1,5 @@
 //
-//  vector.hpp
+//  vector.hh
 //  Cartesian_Vector
 //
 //  Created by Corentin Lebarilier on 9/30/22.

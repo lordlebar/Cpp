@@ -1,7 +1,13 @@
-// vector-test.cc
+//
+//  main.cpp
+//  Cartesian_Vector
+//
+//  Created by Corentin Lebarilier on 20/30/22.
+//
+
 #include <iostream>
 
-#include "vector.hh"
+#include "vector.hpp"
 
 #include <vector>
 #include <cstring> //strcmp

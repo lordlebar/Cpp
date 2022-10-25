@@ -1,22 +1,19 @@
 #include "sources.h"
 
-bool is_prime(long num)
+bool is_prime(long long int n)
 {
-    if (num == 3 || num == 2)
-        return true;
-
-    if (num % 2 == 0 || num % 3 == 0)
+    if (n < 2)
         return false;
-
-    for (int i = 4; i * i <= num; i++)
-    {
-        if (num % i == 0)
-            return false;
+    if (n == 2) {
+        return true;
     }
-    return num < 2 ? false : true;
-}
-
-void printPrimeNumber(long num)
-{
-    cout << num << " is a prime: " << (is_prime(num) == 1 ? "True" : "False") << "\n"; 
+    if (n % 2 == 0) {
+        return false;
+    }
+    for (long long int i = 3; i * i <= n; i += 2) {
+        if (n % i == 0) {
+            return false;
+        }
+    }
+    return true;
 }

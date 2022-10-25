@@ -1,13 +1,15 @@
 #include <fstream>
 #include "source.h"
 
+using namespace std;
+
 int count_motive(char *path, char *motive){
 
     ifstream file;
     file.open(path);
 
     if (file.fail()) {
-        std::cout << "The file " << path << " could not be opened.\n";
+        cout << "The file " << path << " could not be opened.\n";
         return 1;
     }
 

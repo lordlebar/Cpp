@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(cartesian_vector_variable)
+# set the project name
+project(main)
 
-add_executable(main main.cpp vector.cpp)
+# add the executable
+add_executable(main vector.cpp main.cc )

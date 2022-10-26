@@ -1,156 +1,149 @@
-//
-//  vector.cpp
-//  Cartesian_Vector
-//
-//  Created by Corentin Lebarilier on 20/30/22.
-//
+#include <iostream>
+#include <ostream>
+
+#include "config.h"
 #include "vector.hh"
 
-#include <string>
-#include <iostream>
-#include <sstream>
-
-
-Vector::Vector(const Vector& v) : v_size(v.v_size), data(new value[v_size])
+Vector::Vector(size_t N)
 {
-    for (size_t i = 0; i < v_size; ++i)
-    {
-        data[i] = v.data[i];
-    }
-}
+    vector_size = N;
 
-Vector& Vector::operator=(const Vector& v)
-{
-    if (this != &v)
-    {
-        v_size = v.v_size;
-        data.reset(new value[v_size]);
-        for (size_t i = 0; i < v_size; ++i)
-        {
-            data[i] = v.data[i];
-        }
-    }
-    return *this;
-}
+    data = std::make_unique<value[]>(vector_size);
 
-Vector::Vector(size_t v_size) : v_size(v_size), data(new value[v_size])
-{
-    for (size_t i = 0; i < v_size; ++i)
+    for (size_t i = 0; i < vector_size; ++i)
     {
         data[i] = 0;
     }
 }
 
-Vector::Vector(std::initializer_list<value> l) : v_size(l.size()), data(new value[v_size])
+Vector::Vector(std::initializer_list<value> l)
 {
+    vector_size = l.size();
+    std::initializer_list<value>::iterator it;
+
+    data = std::make_unique<value[]>(vector_size);
+
     size_t i = 0;
-    for (auto it = l.begin(); it != l.end(); ++it)
+    for (it = l.begin(); it != l.end(); ++it)
     {
-        data[i] = *it;
-        ++i;
+        data[i++] = *it;
     }
+}
+
+Vector::Vector(const Vector &vec)
+{
+    this->data = std::make_unique<value[]>(vec.size());
+    vector_size = vec.size();
+    for (size_t i = 0; i < vector_size; ++i)
+    {
+        data[i] = vec[i];
+    }
+}
+
+Vector &Vector::operator=(const Vector &v)
+{
+    this->data = std::make_unique<value[]>(v.size());
+    vector_size = v.size();
+    for (size_t i = 0; i < v.size(); ++i)
+    {
+        data[i] = v[i];
+    }
+    return *this;
 }
 
 size_t Vector::size() const
 {
-    return v_size;
+    return vector_size;
 }
 
-// Definition of the operators
-
-Vector& Vector::operator+=(const Vector& rhs)
+std::ostream &operator<<(std::ostream &o, const Vector &v)
 {
-    if (v_size != rhs.v_size)
+    size_t size = v.size();
+    o << "{";
+    for (size_t i = 0; i < size; ++i)
     {
-        throw std::runtime_error("Incompatible size");
+        o << v[i] << (i == size - 1 ? "" : ",");
     }
-    for (size_t i = 0; i < v_size; ++i)
+    return o << "}";
+}
+
+Vector &Vector::operator+=(const Vector &rhs)
+{
+    for (size_t i = 0; i < vector_size; ++i)
     {
-        data[i] += rhs.data[i];
+        data[i] += rhs[i];
     }
+
     return *this;
 }
 
-Vector& Vector::operator-=(const Vector& rhs)
+Vector &Vector::operator-=(const Vector &rhs)
 {
-    if (v_size != rhs.v_size)
+    for (size_t i = 0; i < vector_size; ++i)
     {
-        throw std::runtime_error("Incompatible size");
+        data[i] -= rhs[i];
     }
-    for (size_t i = 0; i < v_size; ++i)
-    {
-        data[i] -= rhs.data[i];
-    }
+
     return *this;
 }
 
-Vector& Vector::operator+=(value v)
+Vector &Vector::operator+=(value v)
 {
-    for (size_t i = 0; i < v_size; ++i)
+    for (size_t i = 0; i < vector_size; ++i)
     {
         data[i] += v;
     }
     return *this;
 }
 
-Vector& Vector::operator*=(value v)
+Vector &Vector::operator*=(value v)
 {
-    for (size_t i = 0; i < v_size; ++i)
+    for (size_t i = 0; i < vector_size; ++i)
     {
         data[i] *= v;
     }
     return *this;
 }
 
-Vector Vector::operator+(const Vector& rhs) const
+Vector Vector::operator+(const Vector &rhs) const
 {
-    if (v_size != rhs.v_size)
+    auto v = Vector(vector_size);
+    for (size_t i = 0; i < vector_size; ++i)
     {
-        throw std::runtime_error("Incompatible size");
+        v[i] = data[i] + rhs[i];
     }
-    Vector result(v_size);
-    for (size_t i = 0; i < v_size; ++i)
-    {
-        result.data[i] = data[i] + rhs.data[i];
-    }
-    return result;
+    return v;
 }
-
 Vector Vector::operator+(value v) const
 {
-    Vector result(v_size);
-    for (size_t i = 0; i < v_size; ++i)
+    auto vec = Vector(vector_size);
+    for (size_t i = 0; i < vector_size; ++i)
     {
-        result.data[i] = data[i] + v;
+        vec[i] = data[i] + v;
     }
-    return result;
+    return vec;
 }
-
-value Vector::operator*(const Vector& rhs) const
+value Vector::operator*(const Vector &rhs) const
 {
-    if (v_size != rhs.v_size)
+    value product = 0;
+    for (size_t i = 0; i < vector_size; ++i)
     {
-        throw std::runtime_error("Incompatible size");
+        product += data[i] * rhs[i];
     }
-    value result = 0;
-    for (size_t i = 0; i < v_size; ++i)
-    {
-        result += data[i] * rhs.data[i];
-    }
-    return result;
+    return product;
 }
-
 Vector Vector::operator*(value v) const
 {
-    Vector result(v_size);
-    for (size_t i = 0; i < v_size; ++i)
+    auto vec = Vector(vector_size);
+    for (size_t i = 0; i < vector_size; ++i)
     {
-        result.data[i] = data[i] * v;
+        vec[i] = data[i] * v;
     }
-    return result;
+
+    return vec;
 }
 
-value& Vector::operator[](size_t idx)
+value &Vector::operator[](size_t idx)
 {
     return data[idx];
 }
@@ -160,27 +153,21 @@ value Vector::operator[](size_t idx) const
     return data[idx];
 }
 
-Vector operator*(value v, const Vector& rhs)
+Vector operator+(const value &s, const Vector &v)
 {
-    return rhs * v;
-}
-
-Vector operator+(value v, const Vector& rhs)
-{
-    return rhs + v;
-}
-
-std::ostream& operator<<(std::ostream& o, const Vector& v)
-{
-    o << "{";
+    auto vec = Vector(v.size());
     for (size_t i = 0; i < v.size(); ++i)
     {
-        o << v[i];
-        if (i != v.size() - 1)
-        {
-            o << ",";
-        }
+        vec[i] = v[i] * s;
     }
-    o << "}";
-    return o;
+    return vec;
+}
+Vector operator*(const value &s, const Vector &v)
+{
+    auto vec = Vector(v.size());
+    for (size_t i = 0; i < v.size(); ++i)
+    {
+        vec[i] = v[i] + s;
+    }
+    return vec;
 }

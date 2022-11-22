@@ -1,173 +1,144 @@
-#include <iostream>
-#include <ostream>
-
-#include "config.h"
 #include "vector.hh"
 
-Vector::Vector(size_t N)
-{
-    vector_size = N;
-
-    data = std::make_unique<value[]>(vector_size);
-
-    for (size_t i = 0; i < vector_size; ++i)
-    {
-        data[i] = 0;
-    }
+Vector::Vector(const Vector &v) {
+    this->vect = std::make_unique<value[]>(v.size());
+    for (size_t i = 0; i < v.size() ; ++i) vect[i] = v[i];
+    size_vector = v.size();
 }
 
-Vector::Vector(std::initializer_list<value> l)
-{
-    vector_size = l.size();
-    std::initializer_list<value>::iterator it;
-
-    data = std::make_unique<value[]>(vector_size);
-
-    size_t i = 0;
-    for (it = l.begin(); it != l.end(); ++it)
-    {
-        data[i++] = *it;
-    }
-}
-
-Vector::Vector(const Vector &vec)
-{
-    this->data = std::make_unique<value[]>(vec.size());
-    vector_size = vec.size();
-    for (size_t i = 0; i < vector_size; ++i)
-    {
-        data[i] = vec[i];
-    }
-}
-
-Vector &Vector::operator=(const Vector &v)
-{
-    this->data = std::make_unique<value[]>(v.size());
-    vector_size = v.size();
-    for (size_t i = 0; i < v.size(); ++i)
-    {
-        data[i] = v[i];
-    }
+Vector& Vector::operator=(const Vector &v) {
+    this->vect = std::make_unique<value[]>(v.size());
+    for (size_t i = 0; i < v.size() ; ++i) vect[i] = v[i];
+    size_vector = v.size();
     return *this;
 }
 
-size_t Vector::size() const
-{
-    return vector_size;
-}
-
-std::ostream &operator<<(std::ostream &o, const Vector &v)
-{
-    size_t size = v.size();
-    o << "{";
-    for (size_t i = 0; i < size; ++i)
-    {
-        o << v[i] << (i == size - 1 ? "" : ",");
+Vector::Vector(size_t N) {
+    vect = std::make_unique<value[]>(N);
+    for (int i = 0; i < N; i++) {
+        vect[i] = 0;
     }
-    return o << "}";
+    size_vector = N;
+}
+Vector::Vector(std::initializer_list<value> l) {
+    size_vector = l.size();
+    vect = std::make_unique<value[]>(l.size());
+    value count = 0;
+    for (value element : l) {
+        vect[count] = element;
+        ++count;
+    }
 }
 
-Vector &Vector::operator+=(const Vector &rhs)
-{
-    for (size_t i = 0; i < vector_size; ++i)
-    {
-        data[i] += rhs[i];
+size_t Vector::size() const {
+    return size_vector;
+}
+
+// Public Member functions here
+Vector& Vector::operator+=(const Vector& rhs) {
+    if (size_vector != rhs.size())
+        std::runtime_error("Incompatible size");
+    for (int i = 0; i < rhs.size(); i++) {
+        vect[i] += rhs[i];
     }
 
     return *this;
 }
 
-Vector &Vector::operator-=(const Vector &rhs)
-{
-    for (size_t i = 0; i < vector_size; ++i)
-    {
-        data[i] -= rhs[i];
-    }
-
-    return *this;
-}
-
-Vector &Vector::operator+=(value v)
-{
-    for (size_t i = 0; i < vector_size; ++i)
-    {
-        data[i] += v;
+Vector& Vector::operator-=(const Vector& rhs){
+    if (size_vector != rhs.size())
+        std::runtime_error("Incompatible size");
+    for (int i = 0; i < rhs.size(); i++) {
+        vect[i] -= rhs[i];
     }
     return *this;
 }
 
-Vector &Vector::operator*=(value v)
-{
-    for (size_t i = 0; i < vector_size; ++i)
-    {
-        data[i] *= v;
+Vector& Vector::operator+=(value v) {
+    for (int i = 0; i < size_vector; i++) {
+        vect[i] += v;
     }
     return *this;
 }
 
-Vector Vector::operator+(const Vector &rhs) const
-{
-    auto v = Vector(vector_size);
-    for (size_t i = 0; i < vector_size; ++i)
-    {
-        v[i] = data[i] + rhs[i];
+Vector& Vector::operator*=(value v){
+    for (int i = 0; i < size_vector; i++) {
+        vect[i] *= v;
     }
-    return v;
-}
-Vector Vector::operator+(value v) const
-{
-    auto vec = Vector(vector_size);
-    for (size_t i = 0; i < vector_size; ++i)
-    {
-        vec[i] = data[i] + v;
-    }
-    return vec;
-}
-value Vector::operator*(const Vector &rhs) const
-{
-    value product = 0;
-    for (size_t i = 0; i < vector_size; ++i)
-    {
-        product += data[i] * rhs[i];
-    }
-    return product;
-}
-Vector Vector::operator*(value v) const
-{
-    auto vec = Vector(vector_size);
-    for (size_t i = 0; i < vector_size; ++i)
-    {
-        vec[i] = data[i] * v;
-    }
-
-    return vec;
+    return *this;
 }
 
-value &Vector::operator[](size_t idx)
-{
-    return data[idx];
+Vector Vector::operator+(const Vector& rhs) const {
+    if (size_vector != rhs.size())
+        std::runtime_error("Incompatible size");
+    for (int i = 0; i < rhs.size(); i++) {
+        vect[i] += rhs[i];
+    }
+    return *this;
 }
 
-value Vector::operator[](size_t idx) const
-{
-    return data[idx];
+Vector Vector::operator+(value v) const {
+    for (int i = 0; i < size_vector; i++) {
+        vect[i] += v;
+    }
+    return *this;
 }
 
-Vector operator+(const value &s, const Vector &v)
-{
-    auto vec = Vector(v.size());
-    for (size_t i = 0; i < v.size(); ++i)
-    {
-        vec[i] = v[i] * s;
+value Vector::operator*(const Vector& rhs) const {
+    if (size_vector != rhs.size())
+        std::runtime_error("Incompatible size");
+    value sum = 0;
+    for (int i = 0; i < rhs.size(); i++) {
+        sum += vect[i] * rhs[i];
     }
-    return vec;
+    return sum;
 }
-Vector operator*(const value &s, const Vector &v)
-{
-    auto vec = Vector(v.size());
-    for (size_t i = 0; i < v.size(); ++i)
-    {
-        vec[i] = v[i] + s;
+
+Vector Vector::operator*(value v) const {
+    for (int i = 0; i < size_vector; i++) {
+        vect[i] *= v;
     }
-    return vec;
+    return *this;
+
+}
+
+value& Vector::operator[](size_t idx) {
+    if (size_vector < idx)
+        std::runtime_error("Incompatible size");
+    return vect[idx];
+}
+
+value Vector::operator[](size_t idx) const {
+    if (size_vector < idx)
+        std::runtime_error("Incompatible size");
+    return vect[idx];
+}
+
+
+
+// Nonmember function operators go here
+Vector operator*(const value& s, const Vector& v) {
+    Vector vv = Vector(v.size());
+    for (int i = 0; i < v.size(); i++) {
+        vv[i] = v[i] * s;
+    }
+    return vv;
+}
+
+Vector operator+(const value& s, const Vector& v) {
+    Vector vv = Vector(v.size());
+    for (int i = 0; i < v.size(); i++) {
+        vv[i] = v[i] + s;
+    }
+    return vv;
+}
+
+std::ostream& operator<<(std::ostream& o, const Vector& v) {
+    o<<'{';
+    int i = 0;
+    for (; i < v.size() - 1; i++) {
+        o<<v[i]<<',';
+    }
+    o<<v[i]<<"}";
+    return o;
 }

@@ -39,8 +39,8 @@ public:
 
 private:
 // Private Member functions here (if necessary)
-    size_t vector_size;
-    std::unique_ptr<value[]>data;
+    std::unique_ptr<value[]> vect;
+    size_t size_vector;
 // Member variables are ALWAYS private, and they go here
 };
 

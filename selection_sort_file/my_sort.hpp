@@ -2,6 +2,7 @@
 // All occurences of XXX need to be replaced with
 // something more meaningful
 
+
 auto my_min_element(auto first, auto last)
 {
     if (first == last)

@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.0)
+project(selection_sort_file)
 
-# set the project name
-project(is_prime_prog)
+set(CMAKE_CXX_STANDARD 20)
 
-# add the executable
-add_executable(main main.cpp sources.cpp)
+add_executable(main my_sort.hpp main.cc)
+
+# Compilation optimization
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")

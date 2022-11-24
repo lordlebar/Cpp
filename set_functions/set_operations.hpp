@@ -1,4 +1,5 @@
 #include <set>
+
 //operation for printing the set
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const std::set<T>& s) {
@@ -62,7 +63,7 @@ std::set<T> operator*(const std::set<T>& s1, const std::set<T>& s2) {
     return result;
 }
 
-// create power set operator
+// create power set operator with set and int
 template <typename T>
 std::set<T> operator^(const std::set<T>& s, int n) {
     std::set<T> result;
@@ -70,13 +71,14 @@ std::set<T> operator^(const std::set<T>& s, int n) {
         throw std::invalid_argument("n must be non-negative");
     }
     if (n == 0) {
-        result.insert({});
-        return result;
+        result.insert(T());
     }
-    for (auto& element : s) {
-        std::set<T> temp = s ^ (n - 1);
-        for (auto& element2 : temp) {
-            result.insert(element + element2);
+    else {
+        for (auto& element : s) {
+            std::set<T> temp = s ^ (n - 1);
+            for (auto& element2 : temp) {
+                result.insert(element + element2);
+            }
         }
     }
     return result;
